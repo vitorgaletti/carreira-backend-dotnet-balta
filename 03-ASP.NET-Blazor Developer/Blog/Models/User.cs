@@ -1,6 +1,7 @@
 #nullable  disable
 
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Blog.Models;
 
@@ -12,6 +13,7 @@ public class User
     [MaxLength(100)]
     public string Email { get; set; }
     
+    [JsonIgnore]
     [MaxLength(100)]
     public string PasswordHash { get; set; }
     
@@ -21,9 +23,7 @@ public class User
     
     [MaxLength(100)]
     public string Bio { get; set; }
-     
-    [MaxLength(100)]
-    public string Github { get; set; }
+    
     public IList<Post> Posts { get; set; }
     public IList<Role> Roles { get; set; }
 }
