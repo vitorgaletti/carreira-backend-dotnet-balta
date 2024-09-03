@@ -1,8 +1,11 @@
 #nullable disable
 
+using Flunt.Validations;
+using PaymentContext.Shared.Entities;
+
 namespace PaymentContext.Domain.Entities;
 
-public class Subscription
+public class Subscription : Entity
 {
     private readonly IList<Payment> _payments;
     public Subscription(DateTime? expireDate)
@@ -22,6 +25,11 @@ public class Subscription
 
     public void AddPayment(Payment payment)
     {
+        AddNotifications(new Contract()
+                            .Requires()
+                            .IsGreaterThan(DateTime.Now, payment.PaidDate, "Subscription.Payments", "A data do pagamento deve ser futura")
+        );
+        
         _payments.Add(payment);
     }
 
